@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Login Page</title>
+	<meta charset="utf-8">
+	<style type="text/css">
+		.login_reg_boxes{
+			display: inline-block;
+			vertical-align: top;
+			margin: 30px 10px;
+			padding: 5px 30px;
+		}
+		.login_reg_boxes:last-child{
+			border-left: 1px solid gray;
+		}
+		.login_reg_boxes:first-child form{
+			padding-top: 30px;
+		}
+		.login_reg_boxes input{
+			margin-left: 10px;
+		}
+		label{
+			display: block;
+			text-align: right;
+			margin: 5px 0px;
+		}
+		p{
+			vertical-align: right;
+			padding: 15px 0px;
+		}
+	</style>
+</head>
+<body>
+	<div class ="login_reg_boxes">
+		<h1>Login:</h1>
+		<form action="/process" method="post">
+			<input type="hidden" name="action" value="login">
+			<label>Email: <input type="text" name="email" value="{{session['form']['email']}}"></label>
+			<label>Password: <input type="text" name="password"></label>
+			<p><input type="submit" name="submit_login" value="Login"></p>
+			{% with messages = get_flashed_messages()%}
+		      {% if messages %}
+		        {% for message in messages %}
+		        	{% if category == "login" %}
+		          		{{ message }}
+		          	{% endif %}
+		        {% endfor %}
+		      {% endif %}
+		    {% endwith %}
+		</form>
+	</div>
+	<div class ="login_reg_boxes">
+		<h1>Register New User:</h1>
+		<form action="/process" method="post">
+			<input type="hidden" name="action" value="register">
+			<label>First Name: <input type="text" name="first_name" value="{{session['form']['first_name']}}"></label>
+			<label>Last Name: <input type="text" name="last_name" value="{{session['form']['last_name']}}"></label>
+			<label>Email: <input type="text" name="email_reg" value="{{session['form']['email_reg']}}"></label>
+			<label>Password:<input type="password" name="password_reg" value ="{{session['form']['password_reg']}}"></label>
+			<label>Confirm Password:<input type="password" name="conf_password"></label>
+			<p><input type="submit" name="submit_reg" value="Create New User"></p>
+			{% with messages = get_flashed_messages(with_categories=true)%}
+		      {% if messages %}
+		        {% for category, message in messages %}
+		        	{% if category == "register" %}
+			          {{ message }}
+			        {% endif %}
+		        {% endfor %}
+		      {% endif %}
+		    {% endwith %}
+		</form>
+	</div>
+	
+
+</body>
+</html>
